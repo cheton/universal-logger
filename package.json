@@ -4,15 +4,25 @@
   "description": "A universal logging library for Node and the browser.",
   "main": "lib/index.js",
   "scripts": {
-    "prepublish": "npm run lint && npm test && npm run build",
+    "prepublish": "npm run lint && npm test && npm run clean && npm run build && npm run build-examples",
     "build": "babel --out-dir ./lib ./src",
-    "test": "./babel-tap --coverage test/*.js",
+    "build-examples": "cd examples; webpack",
+    "clean": "rm -rf lib/*",
+    "demo": "http-server -p 8000 docs/",
     "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src",
+    "test": "./babel-tap --coverage test/*.js",
     "coveralls": "./babel-tap --coverage --coverage-report=text-lcov test/*.js | node_modules/.bin/coveralls",
     "dev": "cd examples; webpack-dev-server --hot --inline --host 0.0.0.0 --port 8000 --content-base ../docs"
   },
   "author": "Cheton Wu <cheton@gmail.com>",
+  "contributors": [
+    {
+      "name": "Cheton Wu",
+      "email": "cheton@gmail.com",
+      "url": "https://github.com/cheton"
+    }
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
