@@ -2,9 +2,7 @@ class LogLevel {
     name = '';
     value = 9999;
 
-    constructor(level) {
-        const { name, value } = { ...level };
-
+    constructor(name, value) {
         if (typeof name !== 'string' || !name) {
             throw new Error(`The given name (${name}) is not a valid string.`);
         }
