@@ -19,6 +19,9 @@ import logger, {
 
 const log = logger(); // Returns the global logger instance
 
+log.setLevel(TRACE);
+log.enableStackTrace();
+
 log.log(INFO, 'The universal logger has initialized');
 log.trace(emoji.get('mostly_sunny'));
 log.debug(emoji.get('sun_small_cloud'));
