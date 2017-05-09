@@ -1,0 +1,16 @@
+{
+  "name": "universal-logger",
+  "description": "A universal logging library for Node and the browser.",
+  "authors": "Cheton Wu <cheton_wu@trend.com.tw>",
+  "homepage": "https://github.com/cheton/universal-logger",
+  "snapshots": [],
+  "keywords": [
+    "universal",
+    "log",
+    "logger",
+    "logging",
+    "node",
+    "browser"
+  ],
+  "license": "MIT"
+}
