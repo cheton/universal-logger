@@ -5905,19 +5905,13 @@ if (!String.prototype.codePointAt) {
 
 exports.__esModule = true;
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var LogLevel = function LogLevel(level) {
+var LogLevel = function LogLevel(name, value) {
     _classCallCheck(this, LogLevel);
 
     this.name = '';
     this.value = 9999;
-
-    var _level = _extends({}, level),
-        name = _level.name,
-        value = _level.value;
 
     if (typeof name !== 'string' || !name) {
         throw new Error('The given name (' + name + ') is not a valid string.');
@@ -6159,12 +6153,12 @@ var _LogLevel2 = _interopRequireDefault(_LogLevel);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 // Predefined logging levels.
-var TRACE = exports.TRACE = new _LogLevel2['default']({ name: 'trace', value: 0 });
-var DEBUG = exports.DEBUG = new _LogLevel2['default']({ name: 'debug', value: 1 });
-var INFO = exports.INFO = new _LogLevel2['default']({ name: 'info', value: 2 });
-var WARN = exports.WARN = new _LogLevel2['default']({ name: 'warn', value: 3 });
-var ERROR = exports.ERROR = new _LogLevel2['default']({ name: 'error', value: 4 });
-var OFF = exports.OFF = new _LogLevel2['default']({ name: 'off', value: 9999 });
+var TRACE = exports.TRACE = new _LogLevel2['default']('trace', 0);
+var DEBUG = exports.DEBUG = new _LogLevel2['default']('debug', 1);
+var INFO = exports.INFO = new _LogLevel2['default']('info', 2);
+var WARN = exports.WARN = new _LogLevel2['default']('warn', 3);
+var ERROR = exports.ERROR = new _LogLevel2['default']('error', 4);
+var OFF = exports.OFF = new _LogLevel2['default']('off', 9999);
 
 /***/ }),
 
@@ -6364,4 +6358,4 @@ contextLog.on('error', function (context, messages) {});
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.js.map?f7692fed8a23d5030da1
+//# sourceMappingURL=bundle.js.map?4a8b379d5bbcdace44ad
