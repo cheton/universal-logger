@@ -64,7 +64,7 @@ log.on('error', (context, messages) => {});
 
 ### Contextual Logging
 ```js
-const cLog = logger(emoji.get('rainbow'));
+const cLog = logger(emoji.get('rainbow')); // Returns a contextual logger instance 
 
 cLog.enableStackTrace();
 cLog.setLevel(INFO);
