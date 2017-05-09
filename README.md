@@ -61,6 +61,8 @@ log.on('error', (context, messages) => {});
 ```
 
 ### Contextual Logging
+![image](https://cloud.githubusercontent.com/assets/447801/25858521/84e4ae20-350e-11e7-8eb0-ab3d4d2cf3d0.png)
+
 ```js
 const cLog = logger(emoji.get('rainbow')); // Returns a contextual logger instance 
 
@@ -79,8 +81,6 @@ cLog.on('info', (context, messages) => {});
 cLog.on('warn', (context, messages) => {});
 cLog.on('error', (context, messages) => {});
 ```
-
-![image](https://cloud.githubusercontent.com/assets/447801/25858521/84e4ae20-350e-11e7-8eb0-ab3d4d2cf3d0.png)
 
 ### Styled Logging
 ![image](https://cloud.githubusercontent.com/assets/447801/25858967/b8c7413e-350f-11e7-9fdf-14d27d195c6c.png)
