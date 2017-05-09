@@ -6327,6 +6327,8 @@ log.on('log', function (context, messages) {/* Custom log processing */});
 
 log.disableStackTrace();
 log.setLevel(_src.TRACE);
+
+log.log(_src.INFO, 'The logger has initialized');
 log.trace(_nodeEmoji2['default'].get('mostly_sunny'));
 log.debug(_nodeEmoji2['default'].get('sun_small_cloud'));
 log.info(_nodeEmoji2['default'].get('barely_sunny'));
@@ -6334,7 +6336,6 @@ log.warn(_nodeEmoji2['default'].get('rain_cloud'));
 log.error(_nodeEmoji2['default'].get('lightning_cloud'));
 
 log.enableStackTrace();
-log.setLevel(_src.DEBUG);
 log.trace(_nodeEmoji2['default'].get('mostly_sunny'));
 log.debug(_nodeEmoji2['default'].get('sun_small_cloud'));
 log.info(_nodeEmoji2['default'].get('barely_sunny'));
@@ -6363,4 +6364,4 @@ contextLog.on('error', function (context, messages) {});
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.js.map?2ba22ec930f4266f0617
+//# sourceMappingURL=bundle.js.map?f7692fed8a23d5030da1
