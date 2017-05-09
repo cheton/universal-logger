@@ -2,6 +2,10 @@
 
 [![NPM](https://nodei.co/npm/universal-logger.png?downloads=true&stars=true)](https://www.npmjs.com/package/universal-logger)
 
+**A universal logging library for Node and the browser**
+
+![image](https://cloud.githubusercontent.com/assets/447801/25858430/4d0651de-350e-11e7-9071-0ad8b2b8fece.png)
+
 ## Installation
 
 ```bash
@@ -22,13 +26,16 @@ const log = logger(); // Returns the global logger instance
 log.setLevel(TRACE);
 log.enableStackTrace();
 
-log.log(INFO, 'The universal logger has initialized');
+log.log(INFO, 'The logger has initialized');
 log.trace(emoji.get('mostly_sunny'));
 log.debug(emoji.get('sun_small_cloud'));
 log.info(emoji.get('barely_sunny'));
 log.warn(emoji.get('rain_cloud'));
 log.error(emoji.get('lightning_cloud'));
 ```
+
+![image](https://cloud.githubusercontent.com/assets/447801/25858187/b7290152-350d-11e7-83bb-41fa6151fa6d.png)
+
 
 ### Log Level
 ```js
@@ -74,6 +81,8 @@ cLog.on('info', (context, messages) => {});
 cLog.on('warn', (context, messages) => {});
 cLog.on('error', (context, messages) => {});
 ```
+
+![image](https://cloud.githubusercontent.com/assets/447801/25858521/84e4ae20-350e-11e7-8eb0-ab3d4d2cf3d0.png)
 
 ## License
 
