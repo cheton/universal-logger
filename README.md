@@ -42,6 +42,22 @@ log.setLevel(TRACE);
 log.setLevel(OFF); // Turn off logging
 ```
 
+### Custom Log Level
+```js
+import logger, { defineLogLevel } from 'universal-logger';
+
+const SILLY = defineLogLevel('silly', 0);
+const VERBOSE = defineLogLevel('verbose', 1);
+const INFO = defineLogLevel('info', 2);
+const WARN = defineLogLevel('warn', 3);
+const ERROR = defineLogLevel('error', 4);
+const FATAL = defineLogLevel('fatal', 5);
+
+const log = logger();
+log.setLevel(SILLY);
+log.log(SILLY, 'Custom Log Level');
+```
+
 ### Enable/Disable Stack Trace
 ```js
 log.enableStackTrace();
