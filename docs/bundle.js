@@ -5967,12 +5967,12 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Logger = function (_EventEmitter) {
     _inherits(Logger, _EventEmitter);
 
-    function Logger(name, options) {
+    function Logger(namespace, options) {
         _classCallCheck(this, Logger);
 
         var _this = _possibleConstructorReturn(this, _EventEmitter.call(this));
 
-        _this.name = '';
+        _this.namespace = '';
         _this.level = _constants.OFF;
         _this.stacktrace = {
             enable: false,
@@ -5984,16 +5984,16 @@ var Logger = function (_EventEmitter) {
         _this.chainedHandlers = [(0, _default2['default'])()];
 
 
-        if ((typeof name === 'undefined' ? 'undefined' : _typeof(name)) === 'object') {
-            options = name;
-            name = '';
+        if ((typeof namespace === 'undefined' ? 'undefined' : _typeof(namespace)) === 'object') {
+            options = namespace;
+            namespace = ''; // master
         }
 
         var _options = _extends({}, options),
             _options$level = _options.level,
             level = _options$level === undefined ? _this.level : _options$level;
 
-        _this.name = name;
+        _this.namespace = namespace;
         _this.setLevel(level);
         return _this;
     }
@@ -6004,7 +6004,7 @@ var Logger = function (_EventEmitter) {
         var i = 0;
 
         var context = {
-            name: this.name,
+            namespace: this.namespace,
             level: level,
             stackframes: []
         };
@@ -6174,7 +6174,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var defaultFormatter = function defaultFormatter(context, messages) {
     var _context = _extends({}, context),
         level = _context.level,
-        name = _context.name;
+        namespace = _context.namespace;
 
     var formatters = [];
 
@@ -6182,8 +6182,8 @@ var defaultFormatter = function defaultFormatter(context, messages) {
         formatters.push(level.name.toUpperCase());
     }
 
-    if (name) {
-        formatters.push(name);
+    if (namespace) {
+        formatters.push(namespace);
     }
 
     messages = [formatters.join(' ')].concat(messages);
@@ -6358,4 +6358,4 @@ contextLog.on('error', function (context, messages) {});
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.js.map?4a8b379d5bbcdace44ad
+//# sourceMappingURL=bundle.js.map?66e8c6fe57030b95336f
