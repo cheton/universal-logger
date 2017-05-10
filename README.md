@@ -108,7 +108,6 @@ import { styleable } from 'universal-logger-browser';
 
 const log = logger();
 
-log.setLevel(TRACE);
 log.chainedHandlers = [
     styleable({
         showTimestamp: true,
@@ -127,7 +126,9 @@ log.chainedHandlers = [
 ];
 
 // In addition to replacing the chainedHandlers array, you can register a listener for the 'log' event.
-log.on('log', styleable({ /* options */ });
+log.on('log', styleable({ /* options */ }));
+
+log.setLevel(TRACE);
 
 log.log(INFO, 'The logger has initialized');
 log.trace(emoji.get('mostly_sunny'));
