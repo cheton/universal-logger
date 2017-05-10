@@ -76,11 +76,11 @@ log.on('warn', (context, messages) => {});
 log.on('error', (context, messages) => {});
 ```
 
-### Contextual Logging
+### Namespace
 ![image](https://cloud.githubusercontent.com/assets/447801/25858521/84e4ae20-350e-11e7-8eb0-ab3d4d2cf3d0.png)
 
 ```js
-const cLog = logger(emoji.get('rainbow')); // Returns a contextual logger instance 
+const cLog = logger(emoji.get('rainbow')); // Returns a logger instance with the given namespace
 
 cLog.enableStackTrace();
 cLog.setLevel(INFO);
@@ -100,6 +100,27 @@ cLog.on('error', (context, messages) => {});
 
 ### Styled Logging
 ![image](https://cloud.githubusercontent.com/assets/447801/25858967/b8c7413e-350f-11e7-9fdf-14d27d195c6c.png)
+
+```js
+import emoji from 'node-emoji';
+import logger, { TRACE } from 'universal-logger';
+import { styleable } from 'universal-logger-browser';
+
+const log = logger();
+
+log.setLevel(TRACE);
+log.chainedHandlers = []; // [optional] Empty array to disable default logging
+log.on('log', styleable({
+    showTimestamp: true
+});
+
+log.log(INFO, 'The logger has initialized');
+log.trace(emoji.get('mostly_sunny'));
+log.debug(emoji.get('sun_small_cloud'));
+log.info(emoji.get('barely_sunny'));
+log.warn(emoji.get('rain_cloud'));
+log.error(emoji.get('lightning_cloud'));
+```
 
 ## License
 
