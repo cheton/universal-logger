@@ -1,6 +1,6 @@
 {
   "name": "universal-logger",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A universal logging library for Node and the browser.",
   "main": "lib/index.js",
   "scripts": {
@@ -55,8 +55,8 @@
     "eslint-plugin-import": "~2.2.0",
     "eslint-plugin-jsx-a11y": "~2.2.3",
     "eslint-plugin-react": "~6.10.0",
-    "html-webpack-plugin": "^2.28.0",
-    "node-emoji": "^1.5.1",
+    "html-webpack-plugin": "~2.28.0",
+    "node-emoji": "~1.5.1",
     "tap": "~10.3.2",
     "webpack": "~2.5.1",
     "webpack-dev-server": "~2.4.5"
