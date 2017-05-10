@@ -99,7 +99,10 @@ cLog.on('error', (context, messages) => {});
 ```
 
 ### Styled Logging
-![image](https://cloud.githubusercontent.com/assets/447801/25858967/b8c7413e-350f-11e7-9fdf-14d27d195c6c.png)
+
+https://github.com/cheton/universal-logger-browser
+
+![image](https://cloud.githubusercontent.com/assets/447801/25890227/5aa8a12a-359f-11e7-94d6-7818a16acde9.png)
 
 ```js
 import emoji from 'node-emoji';
@@ -109,26 +112,11 @@ import { styleable } from 'universal-logger-browser';
 const log = logger();
 
 log.chainedHandlers = [
-    styleable({
-        showTimestamp: true,
-        style: {
-            level: {
-                silly: { // Custom log level
-                    backgroundColor: '#FFF',
-                    border: '1px solid #222',
-                    color: '#222',
-                    lineHeight: 2,
-                    padding: '2px 5px'
-                }
-            }
-        }
-    })
+    styleable({ showTimestamp: true })
 ];
 
-// In addition to replacing the chainedHandlers array, you can register a listener for the 'log' event.
-log.on('log', styleable({ /* options */ }));
-
 log.setLevel(TRACE);
+log.enableStackTrace();
 
 log.log(INFO, 'The logger has initialized');
 log.trace(emoji.get('mostly_sunny'));
