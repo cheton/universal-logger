@@ -5,7 +5,7 @@ import LogLevel from './LogLevel';
 import { TRACE, DEBUG, INFO, WARN, ERROR, OFF } from './constants';
 
 class Logger extends EventEmitter {
-    name = '';
+    namespace = '';
     level = OFF;
     stacktrace = {
         enable: false,
@@ -18,23 +18,23 @@ class Logger extends EventEmitter {
         defaultHandler()
     ];
 
-    constructor(name, options) {
+    constructor(namespace, options) {
         super();
 
-        if (typeof name === 'object') {
-            options = name;
-            name = '';
+        if (typeof namespace === 'object') {
+            options = namespace;
+            namespace = ''; // master
         }
 
         const { level = this.level } = { ...options };
-        this.name = name;
+        this.namespace = namespace;
         this.setLevel(level);
     }
     invokeChainedHandlers(level, messages) {
         let i = 0;
 
         const context = {
-            name: this.name,
+            namespace: this.namespace,
             level: level,
             stackframes: []
         };

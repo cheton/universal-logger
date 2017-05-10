@@ -1,14 +1,14 @@
 /* eslint no-console: 0 */
 const defaultFormatter = (context, messages) => {
-    const { level, name } = { ...context };
+    const { level, namespace } = { ...context };
     const formatters = [];
 
     if (level && level.name) {
         formatters.push(level.name.toUpperCase());
     }
 
-    if (name) {
-        formatters.push(name);
+    if (namespace) {
+        formatters.push(namespace);
     }
 
     messages = [
