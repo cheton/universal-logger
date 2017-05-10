@@ -112,15 +112,21 @@ log.setLevel(TRACE);
 log.chainedHandlers = [
     styleable({
         showTimestamp: true,
-        style: { // Custom styling
+        style: {
             level: {
-                silly: { /* CSS style for custom log level */ }
+                silly: { // Custom log level
+                    backgroundColor: '#FFF',
+                    border: '1px solid #222',
+                    color: '#222',
+                    lineHeight: 2,
+                    padding: '2px 5px'
+                }
             }
         }
     })
 ];
 
-// In addition to replacing the chainedHandlers array, you can register a listener for the 'log' event:
+// In addition to replacing the chainedHandlers array, you can register a listener for the 'log' event.
 log.on('log', styleable({ /* options */ });
 
 log.log(INFO, 'The logger has initialized');
