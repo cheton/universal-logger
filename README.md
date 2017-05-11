@@ -126,6 +126,10 @@ log.warn(emoji.get('rain_cloud'));
 log.error(emoji.get('lightning_cloud'));
 ```
 
+## Plugins
+
+* [universal-logger-browser](https://github.com/cheton/universal-logger-browser) - Browser plugins for universal logger.
+
 ## License
 
 MIT
