@@ -4,7 +4,7 @@
 
 **A universal logging library for Node and the browser**
  
-![image](https://cloud.githubusercontent.com/assets/447801/25858430/4d0651de-350e-11e7-9071-0ad8b2b8fece.png)
+![image](https://cloud.githubusercontent.com/assets/447801/25939476/96bd5568-3665-11e7-9b6f-b96fe0dc73d8.png)
 
 ## Installation
 
@@ -27,7 +27,7 @@ const log = logger(); // Returns the global logger instance
         // Custom log processing
     });
 
-log.enableStackTrace();
+log.disableStackTrace();
 log.setLevel(TRACE);
 
 log.log(INFO, 'The logger has initialized');
@@ -83,6 +83,7 @@ log.on('log', (context, messages) => {
 ![image](https://cloud.githubusercontent.com/assets/447801/25858521/84e4ae20-350e-11e7-8eb0-ab3d4d2cf3d0.png)
 
 ```js
+import emoji from 'node-emoji';
 import logger, { DEBUG } from 'universal-logger';
 import { minimal } from 'universal-logger-browser';
 
@@ -101,25 +102,45 @@ contextLog.warn(emoji.get('rain_cloud'));
 contextLog.error(emoji.get('lightning_cloud'));
 ```
 
-### Styled Logging
+### Browser Logging
 
 https://github.com/cheton/universal-logger-browser
 
-![image](https://cloud.githubusercontent.com/assets/447801/25896230/e2a7f36c-35b5-11e7-8f93-5c05caff6030.png)
+#### Minimal
+![image](https://cloud.githubusercontent.com/assets/447801/25939366/34f461fa-3665-11e7-9d03-0042fda4c32e.png)
 
 ```js
-import emoji from 'node-emoji';
+import logger, { TRACE } from 'universal-logger';
+import { minimal } from 'universal-logger-browser';
+
+const log = logger()
+    .use(minimal());
+
+log.enableStackTrace();
+log.setLevel(TRACE);
+
+log.log(INFO, 'The logger has initialized');
+log.trace(emoji.get('mostly_sunny'));
+log.debug(emoji.get('sun_small_cloud'));
+log.info(emoji.get('barely_sunny'));
+log.warn(emoji.get('rain_cloud'));
+log.error(emoji.get('lightning_cloud'));
+```
+
+#### Styleable
+![image](https://cloud.githubusercontent.com/assets/447801/25939476/96bd5568-3665-11e7-9b6f-b96fe0dc73d8.png)
+
+```js
 import logger, { TRACE } from 'universal-logger';
 import { styleable } from 'universal-logger-browser';
 
-const log = logger();
+const log = logger()
+    .use(styleable({
+        showTimestamp: true
+    }));
 
-log.chainedHandlers = [
-    styleable({ showTimestamp: true })
-];
-
-log.setLevel(TRACE);
 log.enableStackTrace();
+log.setLevel(TRACE);
 
 log.log(INFO, 'The logger has initialized');
 log.trace(emoji.get('mostly_sunny'));
@@ -130,7 +151,6 @@ log.error(emoji.get('lightning_cloud'));
 ```
 
 ## Plugins
-
 * [universal-logger-browser](https://github.com/cheton/universal-logger-browser) - Browser plugins for universal logger.
 
 ## License
