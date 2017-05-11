@@ -8,8 +8,15 @@
 
 ## Installation
 
-```bash
+```sh
 npm install --save universal-logger
+```
+
+### Browser
+
+Use [universal-logger-browser](https://github.com/cheton/universal-logger-browser/) to display logs in the browser console.
+```sh
+npm install --save universal-logger-browser
 ```
 
 ## Usage
@@ -90,11 +97,12 @@ import { minimal } from 'universal-logger-browser';
 const contextLog = logger(emoji.get('rainbow')); // Returns a logger instance with the given namespace
     .use(minimal())
     .on('log', (context, messages) => {
-        // Custom log processing
+        console.log('Custom log processing:', context, messages);
     });
 
 contextLog.enableStackTrace();
 contextLog.setLevel(DEBUG);
+
 contextLog.trace(emoji.get('mostly_sunny'));
 contextLog.debug(emoji.get('sun_small_cloud'));
 contextLog.info(emoji.get('barely_sunny'));
@@ -102,11 +110,11 @@ contextLog.warn(emoji.get('rain_cloud'));
 contextLog.error(emoji.get('lightning_cloud'));
 ```
 
-### Browser Logging
+## Browser Logging
 
 https://github.com/cheton/universal-logger-browser
 
-#### Minimal
+### Minimal
 ![image](https://cloud.githubusercontent.com/assets/447801/25939366/34f461fa-3665-11e7-9d03-0042fda4c32e.png)
 
 ```js
@@ -127,7 +135,7 @@ log.warn(emoji.get('rain_cloud'));
 log.error(emoji.get('lightning_cloud'));
 ```
 
-#### Styleable
+### Styleable
 ![image](https://cloud.githubusercontent.com/assets/447801/25939476/96bd5568-3665-11e7-9b6f-b96fe0dc73d8.png)
 
 ```js
