@@ -2784,7 +2784,6 @@ var Logger = function (_EventEmitter) {
                 var stackframes = _stacktrace2['default'].get();
                 context.stackframes = stackframes;
                 this.emit('log', _extends({}, context), messages);
-                this.emit(level.name, _extends({}, context), messages);
             } catch (e) {
                 // Ignore
             }
@@ -2793,7 +2792,6 @@ var Logger = function (_EventEmitter) {
         } else {
             try {
                 this.emit('log', _extends({}, context), messages);
-                this.emit(level.name, _extends({}, context), messages);
             } catch (e) {
                 // Ignore
             }
@@ -3083,4 +3081,4 @@ contextLog.error(_nodeEmoji2['default'].get('lightning_cloud'));
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.js.map?b60047b4de2c3a2cefb5
+//# sourceMappingURL=bundle.js.map?683d5ec3e31eec34bd07
