@@ -2306,6 +2306,368 @@ if (!String.prototype.codePointAt) {
 
 /***/ }),
 
+/***/ "../node_modules/universal-logger-browser/lib/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.styleable = exports.minimal = undefined;
+
+var _minimal2 = __webpack_require__("../node_modules/universal-logger-browser/lib/minimal.js");
+
+var _minimal3 = _interopRequireDefault(_minimal2);
+
+var _styleable2 = __webpack_require__("../node_modules/universal-logger-browser/lib/styleable.js");
+
+var _styleable3 = _interopRequireDefault(_styleable2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+exports.minimal = _minimal3['default'];
+exports.styleable = _styleable3['default'];
+
+/***/ }),
+
+/***/ "../node_modules/universal-logger-browser/lib/minimal.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+/* eslint no-console: 0 */
+var defaultFormatter = function defaultFormatter(context, messages) {
+    var _context = _extends({}, context),
+        level = _context.level,
+        namespace = _context.namespace;
+
+    var formatters = [];
+
+    if (level && level.name) {
+        formatters.push(level.name.toUpperCase());
+    }
+
+    if (namespace) {
+        formatters.push(namespace);
+    }
+
+    messages = [formatters.join(' ')].concat(messages);
+
+    return messages;
+};
+
+var nativeConsoleMethods = {
+    trace: typeof console !== 'undefined' && console.trace,
+    debug: typeof console !== 'undefined' && console.debug,
+    info: typeof console !== 'undefined' && console.info,
+    warn: typeof console !== 'undefined' && console.warn,
+    error: typeof console !== 'undefined' && console.error
+};
+
+var noop = function noop() {};
+
+var minimal = function minimal(options) {
+    var _options = _extends({}, options),
+        _options$useNativeCon = _options.useNativeConsoleMethods,
+        useNativeConsoleMethods = _options$useNativeCon === undefined ? true : _options$useNativeCon,
+        _options$showSource = _options.showSource,
+        showSource = _options$showSource === undefined ? true : _options$showSource,
+        _options$formatter = _options.formatter,
+        formatter = _options$formatter === undefined ? defaultFormatter : _options$formatter;
+
+    if (typeof formatter !== 'function') {
+        formatter = function formatter(context, messages) {
+            return messages;
+        };
+    }
+
+    return function (context, messages) {
+        var next = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : noop;
+
+        if (typeof next !== 'function') {
+            next = noop;
+        }
+        if (typeof console === 'undefined') {
+            next();
+            return;
+        }
+        messages = formatter(context, messages);
+
+        if (showSource && context.stackframes.length > 0) {
+            var stackframeIndex = Math.min(4, context.stackframes.length - 1);
+            var source = context.stackframes[stackframeIndex].source || '';
+            messages = messages.concat(source);
+        }
+
+        var log = useNativeConsoleMethods ? nativeConsoleMethods[context.level.name] || console.log || noop : console.log || noop;
+        Function.prototype.apply.call(log, console, messages);
+
+        next();
+    };
+};
+
+exports['default'] = minimal;
+
+/***/ }),
+
+/***/ "../node_modules/universal-logger-browser/lib/object-to-css.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+var unitless = {
+    animationIterationCount: true,
+    boxFlex: true,
+    boxFlexGroup: true,
+    boxOrdinalGroup: true,
+    columnCount: true,
+    flex: true,
+    flexGrow: true,
+    flexPositive: true,
+    flexShrink: true,
+    flexNegative: true,
+    flexOrder: true,
+    gridRow: true,
+    gridColumn: true,
+    fontWeight: true,
+    lineClamp: true,
+    lineHeight: true,
+    opacity: true,
+    order: true,
+    orphans: true,
+    tabSize: true,
+    widows: true,
+    zIndex: true,
+    zoom: true,
+
+    // SVG properties
+    fillOpacity: true,
+    stopOpacity: true,
+    strokeDashoffset: true,
+    strokeOpacity: true,
+    strokeWidth: true
+};
+
+var normalizeVendorPrefix = function () {
+    var uppercasePattern = /[A-Z]/g;
+    var msPattern = /^ms-/;
+    return function (str) {
+        return str.replace(uppercasePattern, '-$&').toLowerCase().replace(msPattern, '-ms-');
+    };
+}();
+
+var normalizeStyleValue = function normalizeStyleValue(name, value) {
+    if (typeof value === 'number' && !unitless[name]) {
+        return value + 'px';
+    }
+    return value;
+};
+
+exports['default'] = function () {
+    var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return Object.keys(obj).map(function (key) {
+        var val = obj[key];
+        return normalizeVendorPrefix(key) + ':' + normalizeStyleValue(key, val) + ';';
+    }).join('');
+};
+
+/***/ }),
+
+/***/ "../node_modules/universal-logger-browser/lib/styleable-style.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _objectToCss = __webpack_require__("../node_modules/universal-logger-browser/lib/object-to-css.js");
+
+var _objectToCss2 = _interopRequireDefault(_objectToCss);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+exports['default'] = {
+    timestamp: (0, _objectToCss2['default'])({
+        lineHeight: 2,
+        padding: '2px 0',
+        color: '#3B5998',
+        background: '#EDEFF4'
+    }),
+    namespace: (0, _objectToCss2['default'])({
+        lineHeight: 2,
+        color: '#036F96'
+    }),
+    level: {
+        trace: (0, _objectToCss2['default'])({
+            lineHeight: 2,
+            padding: '2px 5px',
+            border: '1px solid #4F8A10',
+            color: '#4F8A10',
+            background: '#DFF2BF'
+        }),
+        debug: (0, _objectToCss2['default'])({
+            lineHeight: 2,
+            padding: '2px 5px',
+            border: '1px solid #222',
+            color: '#222',
+            background: '#FFF'
+        }),
+        info: (0, _objectToCss2['default'])({
+            lineHeight: 2,
+            padding: '2px 5px',
+            border: '1px solid #00529B',
+            color: '#00529B',
+            background: '#BDE5F8'
+        }),
+        warn: (0, _objectToCss2['default'])({
+            lineHeight: 2,
+            padding: '2px 5px',
+            border: '1px solid #9F6000',
+            color: '#9F6000',
+            background: '#EFEFB3'
+        }),
+        error: (0, _objectToCss2['default'])({
+            lineHeight: 2,
+            padding: '2px 5px',
+            border: '1px solid #D8000C',
+            color: '#D8000C',
+            background: '#FFBABA'
+        })
+    }
+};
+
+/***/ }),
+
+/***/ "../node_modules/universal-logger-browser/lib/styleable.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* eslint no-console: 0 */
+
+
+var _objectToCss = __webpack_require__("../node_modules/universal-logger-browser/lib/object-to-css.js");
+
+var _objectToCss2 = _interopRequireDefault(_objectToCss);
+
+var _styleableStyle = __webpack_require__("../node_modules/universal-logger-browser/lib/styleable-style.js");
+
+var _styleableStyle2 = _interopRequireDefault(_styleableStyle);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var noop = function noop() {};
+
+var styleable = function styleable(options) {
+    var _options = _extends({}, options),
+        _options$colorized = _options.colorized,
+        colorized = _options$colorized === undefined ? true : _options$colorized,
+        _options$showSource = _options.showSource,
+        showSource = _options$showSource === undefined ? true : _options$showSource,
+        _options$showTimestam = _options.showTimestamp,
+        showTimestamp = _options$showTimestam === undefined ? false : _options$showTimestam,
+        _options$formatTimest = _options.formatTimestamp,
+        formatTimestamp = _options$formatTimest === undefined ? function (t) {
+        return new Date(t).toISOString();
+    } : _options$formatTimest;
+
+    options = options || {};
+    options.style = options.style || {};
+    options.style.level = options.style.level || {};
+    var style = _extends({}, _styleableStyle2['default'], options.style, {
+        level: _extends({}, _styleableStyle2['default'].level, options.style.level)
+    });
+
+    return function (context, messages, next) {
+        if (typeof next !== 'function') {
+            next = noop;
+        }
+        if (typeof console === 'undefined') {
+            next();
+            return;
+        }
+
+        var _context = _extends({}, context),
+            namespace = _context.namespace,
+            level = _context.level,
+            _context$stackframes = _context.stackframes,
+            stackframes = _context$stackframes === undefined ? [] : _context$stackframes;
+
+        var timestamp = new Date().getTime();
+        var formatters = [];
+        var styles = [];
+
+        if (showTimestamp) {
+            var str = typeof formatTimestamp === 'function' ? formatTimestamp(timestamp) : timestamp;
+
+            if (colorized) {
+                formatters.push('%c ' + str + ' %c');
+                styles.push(style.timestamp);
+                styles.push('');
+            } else {
+                formatters.push(str);
+            }
+        }
+
+        if (level && level.name) {
+            if (colorized) {
+                var _str = level.name.toUpperCase();
+                formatters.push('%c' + _str + '%c');
+                var styledLevel = style.level[level.name] || '';
+
+                if ((typeof styledLevel === 'undefined' ? 'undefined' : _typeof(styledLevel)) === 'object') {
+                    styles.push((0, _objectToCss2['default'])(styledLevel));
+                } else {
+                    styles.push(String(styledLevel));
+                }
+                styles.push('');
+            } else {
+                formatters.push(level.name.toUpperCase());
+            }
+        }
+
+        if (namespace) {
+            if (colorized) {
+                formatters.push('%c' + name + '%c');
+                styles.push(style.name);
+                styles.push('');
+            } else {
+                formatters.push(name);
+            }
+        }
+
+        messages = [formatters.join(' ')].concat(styles, messages);
+
+        if (showSource && stackframes.length > 0) {
+            var stackframeIndex = Math.min(4, stackframes.length - 1);
+            var source = stackframes[stackframeIndex].source || '';
+            messages = messages.concat(source);
+        }
+
+        var log = console.log || noop;
+        Function.prototype.apply.call(log, console, messages);
+
+        next();
+    };
+};
+
+exports['default'] = styleable;
+
+/***/ }),
+
 /***/ "../src/LogLevel.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2355,10 +2717,6 @@ var _stacktrace = __webpack_require__("../src/stacktrace.js");
 
 var _stacktrace2 = _interopRequireDefault(_stacktrace);
 
-var _default = __webpack_require__("../src/handlers/default.js");
-
-var _default2 = _interopRequireDefault(_default);
-
 var _LogLevel = __webpack_require__("../src/LogLevel.js");
 
 var _LogLevel2 = _interopRequireDefault(_LogLevel);
@@ -2384,7 +2742,7 @@ var Logger = function (_EventEmitter) {
         _this.namespace = '';
         _this.level = _constants.OFF;
         _this.stacktrace = false;
-        _this.chainedHandlers = [(0, _default2['default'])()];
+        _this.chainedHandlers = [];
 
 
         if ((typeof namespace === 'undefined' ? 'undefined' : _typeof(namespace)) === 'object') {
@@ -2442,6 +2800,13 @@ var Logger = function (_EventEmitter) {
 
             next();
         }
+    };
+
+    Logger.prototype.use = function use(handler) {
+        if (typeof handler === 'function') {
+            this.chainedHandlers.push(handler);
+        }
+        return this;
     };
 
     Logger.prototype.enableStackTrace = function enableStackTrace() {
@@ -2562,78 +2927,6 @@ var OFF = exports.OFF = new _LogLevel2['default']('off', 9999);
 
 /***/ }),
 
-/***/ "../src/handlers/default.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-/* eslint no-console: 0 */
-var defaultFormatter = function defaultFormatter(context, messages) {
-    var _context = _extends({}, context),
-        level = _context.level,
-        namespace = _context.namespace;
-
-    var formatters = [];
-
-    if (level && level.name) {
-        formatters.push(level.name.toUpperCase());
-    }
-
-    if (namespace) {
-        formatters.push(namespace);
-    }
-
-    messages = [formatters.join(' ')].concat(messages);
-
-    return messages;
-};
-
-var consoleMethod = {
-    trace: console.log,
-    debug: console.debug || console.log,
-    info: console.info || console.log,
-    warn: console.warn || console.log,
-    error: console.error || console.log
-};
-
-var noop = function noop() {};
-
-module.exports = function (options) {
-    var _options = _extends({}, options),
-        _options$showSource = _options.showSource,
-        showSource = _options$showSource === undefined ? true : _options$showSource,
-        _options$formatter = _options.formatter,
-        formatter = _options$formatter === undefined ? defaultFormatter : _options$formatter;
-
-    if (typeof formatter !== 'function') {
-        formatter = function formatter(context, messages) {
-            return messages;
-        };
-    }
-
-    return function (context, messages, next) {
-        if (typeof next !== 'function') {
-            next = noop;
-        }
-        messages = formatter(context, messages);
-
-        if (showSource && context.stackframes.length > 0) {
-            var stackframeIndex = Math.min(4, context.stackframes.length - 1);
-            var source = context.stackframes[stackframeIndex].source || '';
-            messages = messages.concat(source);
-        }
-
-        var log = consoleMethod[context.level.name] || console.log;
-        Function.prototype.apply.call(log, console, messages);
-        next();
-    };
-};
-
-/***/ }),
-
 /***/ "../src/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2745,17 +3038,20 @@ var _nodeEmoji = __webpack_require__("../node_modules/node-emoji/index.js");
 
 var _nodeEmoji2 = _interopRequireDefault(_nodeEmoji);
 
+var _universalLoggerBrowser = __webpack_require__("../node_modules/universal-logger-browser/lib/index.js");
+
 var _src = __webpack_require__("../src/index.js");
 
 var _src2 = _interopRequireDefault(_src);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-/* eslint no-console: 0 */
-var log = (0, _src2['default'])();
-log.on('log', function (context, messages) {/* Custom log processing */});
+var log = (0, _src2['default'])().use((0, _universalLoggerBrowser.minimal)()).on('log', function (context, messages) {
+    // Custom log processing
+}); /* eslint no-console: 0 */
 
-log.disableStackTrace();
+
+log.enableStackTrace();
 log.setLevel(_src.TRACE);
 
 log.log(_src.INFO, 'The logger has initialized');
@@ -2765,33 +3061,26 @@ log.info(_nodeEmoji2['default'].get('barely_sunny'));
 log.warn(_nodeEmoji2['default'].get('rain_cloud'));
 log.error(_nodeEmoji2['default'].get('lightning_cloud'));
 
-log.enableStackTrace();
-log.trace(_nodeEmoji2['default'].get('mostly_sunny'));
-log.debug(_nodeEmoji2['default'].get('sun_small_cloud'));
-log.info(_nodeEmoji2['default'].get('barely_sunny'));
-log.warn(_nodeEmoji2['default'].get('rain_cloud'));
-log.error(_nodeEmoji2['default'].get('lightning_cloud'));
-
-log.setLevel(_src.OFF);
+log.setLevel(_src.OFF); // Turn off logging
 log.error(_nodeEmoji2['default'].get('scream'));
 
-var contextLog = (0, _src2['default'])(_nodeEmoji2['default'].get('rainbow'));
-contextLog.enableStackTrace();
+var contextLog = (0, _src2['default'])(_nodeEmoji2['default'].get('rainbow')).use((0, _universalLoggerBrowser.minimal)({
+    useNativeConsoleMethods: false
+})).use((0, _universalLoggerBrowser.styleable)({
+    showTimestamp: true
+})).on('log', function (context, messages) {
+    // Custom log processing
+});
+
 contextLog.setLevel(_src.INFO);
+contextLog.enableStackTrace();
+contextLog.trace(_nodeEmoji2['default'].get('mostly_sunny'));
+contextLog.debug(_nodeEmoji2['default'].get('sun_small_cloud'));
 contextLog.info(_nodeEmoji2['default'].get('barely_sunny'));
 contextLog.warn(_nodeEmoji2['default'].get('rain_cloud'));
-
-contextLog.on('log', function (context, messages) {
-    // Custom log processing
-    console.log('Custom log processing:', context, messages);
-});
-contextLog.on('trace', function (context, messages) {});
-contextLog.on('debug', function (context, messages) {});
-contextLog.on('info', function (context, messages) {});
-contextLog.on('warn', function (context, messages) {});
-contextLog.on('error', function (context, messages) {});
+contextLog.error(_nodeEmoji2['default'].get('lightning_cloud'));
 
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.js.map?ad74cb6382b0f09a1a7b
+//# sourceMappingURL=bundle.js.map?b60047b4de2c3a2cefb5

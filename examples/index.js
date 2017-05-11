@@ -1,11 +1,15 @@
 /* eslint no-console: 0 */
 import emoji from 'node-emoji';
+import { minimal, styleable } from 'universal-logger-browser';
 import logger, { TRACE, INFO, OFF } from '../src';
 
-const log = logger();
-log.on('log', (context, messages) => { /* Custom log processing */ });
+const log = logger()
+    .use(minimal())
+    .on('log', (context, messages) => {
+        // Custom log processing
+    });
 
-log.disableStackTrace();
+log.enableStackTrace();
 log.setLevel(TRACE);
 
 log.log(INFO, 'The logger has initialized');
@@ -15,28 +19,24 @@ log.info(emoji.get('barely_sunny'));
 log.warn(emoji.get('rain_cloud'));
 log.error(emoji.get('lightning_cloud'));
 
-log.enableStackTrace();
-log.trace(emoji.get('mostly_sunny'));
-log.debug(emoji.get('sun_small_cloud'));
-log.info(emoji.get('barely_sunny'));
-log.warn(emoji.get('rain_cloud'));
-log.error(emoji.get('lightning_cloud'));
-
-log.setLevel(OFF);
+log.setLevel(OFF); // Turn off logging
 log.error(emoji.get('scream'));
 
-const contextLog = logger(emoji.get('rainbow'));
-contextLog.enableStackTrace();
+const contextLog = logger(emoji.get('rainbow'))
+    .use(minimal({
+        useNativeConsoleMethods: false
+    }))
+    .use(styleable({
+        showTimestamp: true
+    }))
+    .on('log', (context, messages) => {
+        // Custom log processing
+    });
+
 contextLog.setLevel(INFO);
+contextLog.enableStackTrace();
+contextLog.trace(emoji.get('mostly_sunny'));
+contextLog.debug(emoji.get('sun_small_cloud'));
 contextLog.info(emoji.get('barely_sunny'));
 contextLog.warn(emoji.get('rain_cloud'));
-
-contextLog.on('log', (context, messages) => {
-    // Custom log processing
-    console.log('Custom log processing:', context, messages);
-});
-contextLog.on('trace', (context, messages) => {});
-contextLog.on('debug', (context, messages) => {});
-contextLog.on('info', (context, messages) => {});
-contextLog.on('warn', (context, messages) => {});
-contextLog.on('error', (context, messages) => {});
+contextLog.error(emoji.get('lightning_cloud'));

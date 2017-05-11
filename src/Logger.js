@@ -1,6 +1,5 @@
 import { EventEmitter } from 'events';
 import stacktrace from './stacktrace';
-import defaultHandler from './handlers/default';
 import LogLevel from './LogLevel';
 import { TRACE, DEBUG, INFO, WARN, ERROR, OFF } from './constants';
 
@@ -8,9 +7,7 @@ class Logger extends EventEmitter {
     namespace = '';
     level = OFF;
     stacktrace = false;
-    chainedHandlers = [
-        defaultHandler()
-    ];
+    chainedHandlers = [];
 
     constructor(namespace, options) {
         super();
@@ -47,7 +44,6 @@ class Logger extends EventEmitter {
                 const stackframes = stacktrace.get();
                 context.stackframes = stackframes;
                 this.emit('log', { ...context }, messages);
-                this.emit(level.name, { ...context }, messages);
             } catch (e) {
                 // Ignore
             }
@@ -56,13 +52,18 @@ class Logger extends EventEmitter {
         } else {
             try {
                 this.emit('log', { ...context }, messages);
-                this.emit(level.name, { ...context }, messages);
             } catch (e) {
                 // Ignore
             }
 
             next();
         }
+    }
+    use(handler) {
+        if (typeof handler === 'function') {
+            this.chainedHandlers.push(handler);
+        }
+        return this;
     }
     enableStackTrace() {
         this.stacktrace = true;

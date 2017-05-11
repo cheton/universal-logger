@@ -19,11 +19,16 @@ import logger, {
     defineLogLevel,
     TRACE, DEBUG, INFO, WARN, ERROR, OFF
 } from 'universal-logger';
+import { minimal } from 'universal-logger-browser';
 
 const log = logger(); // Returns the global logger instance
+    .use(minimal())
+    .on('log', (context, messages) => {
+        // Custom log processing
+    });
 
-log.setLevel(TRACE);
 log.enableStackTrace();
+log.setLevel(TRACE);
 
 log.log(INFO, 'The logger has initialized');
 log.trace(emoji.get('mostly_sunny'));
@@ -45,6 +50,7 @@ log.setLevel(OFF); // Turn off logging
 ### Custom Log Level
 ```js
 import logger, { defineLogLevel } from 'universal-logger';
+import { minimal } from 'universal-logger-browser';
 
 const SILLY = defineLogLevel('silly', 0);
 const VERBOSE = defineLogLevel('verbose', 1);
@@ -53,7 +59,9 @@ const WARN = defineLogLevel('warn', 3);
 const ERROR = defineLogLevel('error', 4);
 const FATAL = defineLogLevel('fatal', 5);
 
-const log = logger();
+const log = logger()
+    .use(minimal());
+
 log.setLevel(SILLY);
 log.log(SILLY, 'Custom Log Level');
 ```
@@ -69,33 +77,28 @@ log.disableStackTrace();
 log.on('log', (context, messages) => {
     // Custom log processing
 });
-log.on('trace', (context, messages) => {});
-log.on('debug', (context, messages) => {});
-log.on('info', (context, messages) => {});
-log.on('warn', (context, messages) => {});
-log.on('error', (context, messages) => {});
 ```
 
 ### Namespace
 ![image](https://cloud.githubusercontent.com/assets/447801/25858521/84e4ae20-350e-11e7-8eb0-ab3d4d2cf3d0.png)
 
 ```js
-const cLog = logger(emoji.get('rainbow')); // Returns a logger instance with the given namespace
+import logger, { DEBUG } from 'universal-logger';
+import { minimal } from 'universal-logger-browser';
 
-cLog.enableStackTrace();
-cLog.setLevel(INFO);
-cLog.info(emoji.get('barely_sunny'));
-cLog.warn(emoji.get('rain_cloud'));
+const contextLog = logger(emoji.get('rainbow')); // Returns a logger instance with the given namespace
+    .use(minimal())
+    .on('log', (context, messages) => {
+        // Custom log processing
+    });
 
-cLog.on('log', (context, messages) => {
-    // Custom log processing
-    console.log('Custom log processing:', context, messages);
-});
-cLog.on('trace', (context, messages) => {});
-cLog.on('debug', (context, messages) => {});
-cLog.on('info', (context, messages) => {});
-cLog.on('warn', (context, messages) => {});
-cLog.on('error', (context, messages) => {});
+contextLog.enableStackTrace();
+contextLog.setLevel(DEBUG);
+contextLog.trace(emoji.get('mostly_sunny'));
+contextLog.debug(emoji.get('sun_small_cloud'));
+contextLog.info(emoji.get('barely_sunny'));
+contextLog.warn(emoji.get('rain_cloud'));
+contextLog.error(emoji.get('lightning_cloud'));
 ```
 
 ### Styled Logging
