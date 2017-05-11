@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import StackTrace from 'stacktrace-js';
+import stacktrace from './stacktrace';
 import defaultHandler from './handlers/default';
 import LogLevel from './LogLevel';
 import { TRACE, DEBUG, INFO, WARN, ERROR, OFF } from './constants';
@@ -7,13 +7,7 @@ import { TRACE, DEBUG, INFO, WARN, ERROR, OFF } from './constants';
 class Logger extends EventEmitter {
     namespace = '';
     level = OFF;
-    stacktrace = {
-        enable: false,
-        options: {
-            // Set `offline` to true to prevent all network requests
-            offline: true
-        }
-    };
+    stacktrace = false;
     chainedHandlers = [
         defaultHandler()
     ];
@@ -48,21 +42,17 @@ class Logger extends EventEmitter {
             handler({ ...context }, messages, next);
         };
 
-        if (this.stacktrace.enable) {
-            StackTrace
-                .get({ ...this.stacktrace.options })
-                .then(stackframes => {
-                    context.stackframes = stackframes;
+        if (this.stacktrace) {
+            try {
+                const stackframes = stacktrace.get();
+                context.stackframes = stackframes;
+                this.emit('log', { ...context }, messages);
+                this.emit(level.name, { ...context }, messages);
+            } catch (e) {
+                // Ignore
+            }
 
-                    try {
-                        this.emit('log', { ...context }, messages);
-                        this.emit(level.name, { ...context }, messages);
-                    } catch (e) {
-                        // Ignore
-                    }
-
-                    next();
-                });
+            next();
         } else {
             try {
                 this.emit('log', { ...context }, messages);
@@ -74,15 +64,11 @@ class Logger extends EventEmitter {
             next();
         }
     }
-    enableStackTrace(options) {
-        this.stacktrace.enable = true;
-        this.stacktrace.options = {
-            ...this.stacktrace.options,
-            ...options
-        };
+    enableStackTrace() {
+        this.stacktrace = true;
     }
     disableStackTrace() {
-        this.stacktrace.enable = false;
+        this.stacktrace = false;
     }
     // Changes the current logging level for the logging instance
     setLevel(level) {

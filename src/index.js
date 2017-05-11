@@ -16,7 +16,7 @@ globalLogger.on('setLevel', (level) => {
     });
 });
 
-module.exports = (name, options) => {
+module.exports = (name) => {
     name = String(name || '');
 
     if (!name) {
@@ -24,10 +24,9 @@ module.exports = (name, options) => {
     }
 
     if (!contextualLoggers[name]) {
-        const {
-            level = globalLogger.level
-        } = { ...options };
-        contextualLoggers[name] = new Logger(name, { level });
+        contextualLoggers[name] = new Logger(name, {
+            level: globalLogger.level
+        });
     }
 
     return contextualLoggers[name];

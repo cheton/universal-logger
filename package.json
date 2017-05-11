@@ -1,6 +1,6 @@
 {
   "name": "universal-logger",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A universal logging library for Node and the browser.",
   "main": "lib/index.js",
   "scripts": {
@@ -37,7 +37,8 @@
     "browser"
   ],
   "dependencies": {
-    "stacktrace-js": "^2.0.0"
+    "error-stack-parser": "^2.0.1",
+    "stack-generator": "^2.0.1"
   },
   "devDependencies": {
     "babel-cli": "~6.24.1",

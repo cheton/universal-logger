@@ -42,7 +42,7 @@ module.exports = (options) => {
         messages = formatter(context, messages);
 
         if (showSource && context.stackframes.length > 0) {
-            const stackframeIndex = Math.min(2, context.stackframes.length - 1);
+            const stackframeIndex = Math.min(4, context.stackframes.length - 1);
             const source = context.stackframes[stackframeIndex].source || '';
             messages = messages.concat(source);
         }
