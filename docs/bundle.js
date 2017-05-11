@@ -2621,7 +2621,7 @@ module.exports = function (options) {
         messages = formatter(context, messages);
 
         if (showSource && context.stackframes.length > 0) {
-            var stackframeIndex = Math.min(2, context.stackframes.length - 1);
+            var stackframeIndex = Math.min(4, context.stackframes.length - 1);
             var source = context.stackframes[stackframeIndex].source || '';
             messages = messages.concat(source);
         }
@@ -2794,4 +2794,4 @@ contextLog.on('error', function (context, messages) {});
 /***/ })
 
 /******/ });
-//# sourceMappingURL=bundle.js.map?1efbb6c1c82c57776afb
+//# sourceMappingURL=bundle.js.map?ad74cb6382b0f09a1a7b
