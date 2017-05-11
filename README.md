@@ -20,15 +20,13 @@ npm install --save universal-logger-browser
 ```
 
 ## Usage
+
 ```js
 import emoji from 'node-emoji';
-import logger, {
-    defineLogLevel,
-    TRACE, DEBUG, INFO, WARN, ERROR, OFF
-} from 'universal-logger';
+import logger, { TRACE, DEBUG, INFO, WARN, ERROR, OFF } from 'universal-logger';
 import { minimal } from 'universal-logger-browser';
 
-const log = logger(); // Returns the global logger instance
+const log = logger() // Returns the global logger instance
     .use(minimal())
     .on('log', (context, messages) => {
         // Custom log processing
@@ -48,6 +46,7 @@ log.error(emoji.get('lightning_cloud'));
 ![image](https://cloud.githubusercontent.com/assets/447801/25858187/b7290152-350d-11e7-83bb-41fa6151fa6d.png)
 
 ### Log Level
+
 ```js
 log.getLevel();
 log.setLevel(TRACE);
@@ -55,6 +54,7 @@ log.setLevel(OFF); // Turn off logging
 ```
 
 ### Custom Log Level
+
 ```js
 import logger, { defineLogLevel } from 'universal-logger';
 import { minimal } from 'universal-logger-browser';
@@ -74,12 +74,14 @@ log.log(SILLY, 'Custom Log Level');
 ```
 
 ### Enable/Disable Stack Trace
+
 ```js
 log.enableStackTrace();
 log.disableStackTrace();
 ```
 
 ### Custom Log Processing
+
 ```js
 log.on('log', (context, messages) => {
     // Custom log processing
@@ -87,6 +89,7 @@ log.on('log', (context, messages) => {
 ```
 
 ### Namespace
+
 ![image](https://cloud.githubusercontent.com/assets/447801/25858521/84e4ae20-350e-11e7-8eb0-ab3d4d2cf3d0.png)
 
 ```js
@@ -94,7 +97,8 @@ import emoji from 'node-emoji';
 import logger, { DEBUG } from 'universal-logger';
 import { minimal } from 'universal-logger-browser';
 
-const contextLog = logger(emoji.get('rainbow')); // Returns a logger instance with the given namespace
+const namespace = emoji.get('rainbow');
+const contextLog = logger(namespace) // Returns a logger instance with the given namespace
     .use(minimal())
     .on('log', (context, messages) => {
         console.log('Custom log processing:', context, messages);
@@ -115,6 +119,7 @@ contextLog.error(emoji.get('lightning_cloud'));
 https://github.com/cheton/universal-logger-browser
 
 ### Minimal
+
 ![image](https://cloud.githubusercontent.com/assets/447801/25939366/34f461fa-3665-11e7-9d03-0042fda4c32e.png)
 
 ```js
@@ -136,6 +141,7 @@ log.error(emoji.get('lightning_cloud'));
 ```
 
 ### Styleable
+
 ![image](https://cloud.githubusercontent.com/assets/447801/25939476/96bd5568-3665-11e7-9b6f-b96fe0dc73d8.png)
 
 ```js
@@ -159,6 +165,7 @@ log.error(emoji.get('lightning_cloud'));
 ```
 
 ## Plugins
+
 * [universal-logger-browser](https://github.com/cheton/universal-logger-browser) - Browser plugins for universal logger.
 
 ## License
