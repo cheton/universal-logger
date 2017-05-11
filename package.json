@@ -1,6 +1,6 @@
 {
   "name": "universal-logger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A universal logging library for Node and the browser.",
   "main": "lib/index.js",
   "scripts": {
